@@ -1,17 +1,32 @@
-<script setup>
+<script setup lang="ts">
+import { useProducts } from '~/composables/useProducts';
 import ProductCard from './ProductCard.vue'
+import { watch, computed } from 'vue';
 
-const fakeProducts = [
-    { name: 'Shirt', bild: 'pink_shirt.jpg', price: 25 },
-    { name: 'Shoes', bild: 'shoes.avif', price: 50 },
-    { name: 'Hat', bild: 'pink_hat.webp', price: 15 },
-]
+const { products, loading, error} = useProducts()
+
+watch(products, (val) => {
+  console.log('Products:', val)
+}, { immediate: true})
+
+const normalizedProducts = computed(() => {
+  if (!products.value) return []
+
+  return (products.value as any[]).map((p) => ({
+    name: p.title,
+    bild: p.image,
+    price: p.price,
+  }))
+})
+
 </script>
 
 <template>
-    <div class="grid grid-cols-3 gap-4 mt-10">
+    <div v-if="loading">Loading...</div>
+    <div v-if="error">Something went wrong</div>
+    <div v-else class="grid grid-cols-3 gap-4 mt-10">
         <ProductCard
-            v-for="(product, index) in fakeProducts"
+            v-for="(product, index) in normalizedProducts"
             :key="index"
             :product="product"
         />

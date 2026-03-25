@@ -1,18 +1,45 @@
 <template>
-  <header class="bg-white shadow">
-    <div class="max-w-6xl mx-auto px-4">
+  <header class="bg-gray-800 text-white border-none">
+    <div class="w-full">
       <div class="flex items-center justify-between h-16">
         
         <!-- Left: Logo -->
-        <div class="text-xl font-bold">
+        <NuxtLink 
+          to="/" 
+          class="text-xl font-bold px-10"
+          @click="selectedCategory= null"
+        >
           LOGO
+        </NuxtLink>
+
+        <div class="flex gap-4" v-if="!loading && categories.length">
+          <button
+            @click="handleReset"
+            :class="[
+              'text-sm px-2 py-1 rounded transition',
+              selectedCategory === null
+                ? 'bg-blue-600 text-white'
+                : 'text-white hover:text-blue-400'
+            ]"
+          >
+            All
+          </button>
+          <button
+            v-for="cat in categories"
+            :key="cat"
+            @click="handleCategoryClick(cat)"
+            :class="['text-sm px-2 py-1 rounded transition',
+              selectedCategory === cat
+              ? 'bg-blue-600 text-white'
+              : 'text-white hover:text-blue-400'
+            ]"
+          >
+            {{ cat }}
+          </button>
         </div>
 
-        <!-- Center: Menu -->
-        <MainMenu :categories="categories" />
-
         <!-- Right: Cart Icon -->
-        <div class="text-2xl cursor-pointer">
+        <div class="text-2xl cursor-pointer px-10">
           🛒
         </div>
 
@@ -22,34 +49,21 @@
 </template>
 
 <script setup lang="ts">
-import MainMenu from '../navigation/MainMenu.vue';
+import { useProducts } from '../../composables/useProducts';
+import { useRouter } from 'vue-router';
 
-const categories= [
-     {
-    name: "Electronics",
-    slug: "electronics",
-    children: [
-      { name: "Phones", slug: "phones" },
-      { name: "Laptops", slug: "laptops" }
-    ]
-  },
-  {
-    name: "Clothing",
-    slug: "clothing",
-    children: [
-      { name: "Men", slug: "men" },
-      { name: "Women", slug: "women" }
-    ]
-  },
-  {
-    name: "Home",
-    slug: "home",
-    children: [
-      { name: "Furniture", slug: "furniture" },
-      { name: "Kitchen", slug: "kitchen" }
-    ]
-  }
-]
+const { categories, selectedCategory, loading } = useProducts()
 
+const router= useRouter()
+
+const handleCategoryClick = (cat: string) => {
+  selectedCategory.value= cat
+  router.push('/')
+}
+
+const handleReset = () => {
+  selectedCategory.value = null
+  router.push('/')
+}
 
 </script>

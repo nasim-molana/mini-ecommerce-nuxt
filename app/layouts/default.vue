@@ -5,10 +5,10 @@ import AppHeader from '~/components/layout/AppHeader.vue';
 
 <template>
     <div>
-        <header class="bg-white shadow p-4">
+        <header class="bg-gray-800 shadow p-4">
             <AppHeader />
         </header>
-        <main class="p-6">
+        <main class="pt-5 p-6">
             <slot />
         </main>
     </div>

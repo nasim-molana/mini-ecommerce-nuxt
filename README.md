@@ -1,165 +1,175 @@
-# 🛒 Mini E-Commerce (Nuxt 4)
+# 🛒 Mini E-Commerce (Nuxt 3)
 
-A modern **mini e-commerce frontend application** built with **Nuxt 4**, **Vue 3 (Composition API)**, and **Tailwind CSS**.
-
-This project is designed as a **real-world portfolio project** to demonstrate frontend architecture, clean code practices, and a professional development workflow.
+A **production-ready frontend e-commerce application** built with **Nuxt**, **Vue 3 (Composition API)**, and **TypeScript**, focusing on **scalable architecture**, **clean code**, and **real-world development practices**.
 
 ---
 
 ## 🚀 Tech Stack
 
-* **Nuxt 4**
+* **Nuxt 3**
 * **Vue 3 (Composition API)**
+* **TypeScript**
 * **Tailwind CSS**
-* **Fake Store API** (for product data)
+* **Pinia (State Management)**
+* **REST API (Fake Store API or custom backend)**
 
 ---
 
-## 🎯 Project Goals
+## 🎯 Project Purpose
 
-* Build a scalable and maintainable frontend architecture
-* Apply Vue 3 and Nuxt concepts in a real project
-* Follow real-world development practices (GitHub workflow)
-* Create a strong portfolio project for frontend job applications
+This project is designed as a **real-world portfolio application** to demonstrate:
 
----
-
-## 🧱 Features
-
-### ✅ Implemented
-
-* Project structure based on best practices
-* Responsive UI with Tailwind CSS
-* Header with navigation
-
-  * Dynamic categories
-  * Accordion-style submenu
-* Product Grid & Product Card components
-* Clean component separation:
-
-  * Layout
-  * Navigation
-  * Product UI
-
-### 🚧 In Progress
-
-* Fetch products from API (useFetch + composables)
-* Dynamic data rendering
-* Loading & error states
-
-### 🔜 Planned
-
-* Category filtering
-* Product details page (dynamic routing)
-* Shopping cart (add/remove items)
-* State management
-* Performance optimizations
+* Scalable frontend architecture
+* Component-driven development
+* Clean and maintainable code
+* State management with Pinia
+* API integration and data handling
+* Professional Git workflow
 
 ---
 
-## 🏗️ Project Structure
+## 🧩 Core Features
 
-```text
-app/
-  components/
-    layout/
-      AppHeader.vue
-    navigation/
-      MainMenu.vue
-    product/
-      ProductGrid.vue
-      ProductCard.vue
-  composables/
-    useProducts.ts
-  pages/
-    index.vue
-```
+### 🛍 Product Flow
+
+* Product listing (grid view)
+* Product detail page (dynamic routing)
+* Category-based filtering
+* Search functionality
+
+### 🛒 Shopping Cart
+
+* Add / remove products
+* Update quantities
+* Total price calculation
+* Persistent cart state
+
+### 🔐 Authentication (Mock)
+
+* Login / Logout (local storage based)
+* Protected routes (e.g. checkout)
+
+### ⚙️ Data Handling
+
+* Centralized API layer (`useApi`)
+* Composables for business logic:
+
+  * `useProducts`
+  * `useCart`
+  * `useCategories`
+* Loading, error, and empty states
+
+### 🧠 Architecture
+
+* Separation of concerns:
+
+  * UI components
+  * Business logic (composables)
+  * Global state (Pinia)
+* Reusable UI components (design system approach)
 
 ---
 
-## 🧠 Architecture
+## 🏗 Project Structure
 
-This project follows a **clean separation of concerns**:
+components/
+ui/
+layout/
+navigation/
+product/
+cart/
 
-* **Composable (useProducts)** → Data fetching layer
-* **ProductGrid** → Layout and data mapping
-* **ProductCard** → Pure UI component
+composables/
+useApi.ts
+useProducts.ts
+useCategories.ts
+useCart.ts
 
-This approach ensures scalability and maintainability.
+stores/
+cart.ts
+
+pages/
+index.vue
+category/[slug].vue
+products/[id].vue
+cart.vue
+login.vue
+
+types/
+product.ts
+cart.ts
+category.ts
+
+middleware/
+auth.ts
+
+constants/
+api.ts
+
+---
+
+## 🧠 Key Concepts
+
+* **Composable Architecture** → Encapsulating logic into reusable functions
+* **State Management with Pinia** → Centralized and predictable state
+* **Typed Data Models** → Strong TypeScript usage for reliability
+* **Clean Separation of Layers** → UI vs Logic vs State
+* **Reusable Components** → Scalable and maintainable UI
 
 ---
 
 ## 🔁 Development Workflow
 
-This project simulates a **real-world team workflow**:
+This project follows a **professional Git workflow**:
 
-* GitHub Issues for task management
-* Feature-based branching strategy
-* Pull Requests for changes
-* Conventional Commits
+* Feature-based branches
+* Pull Requests for every change
+* Conventional commits
 
 Example:
 
-```bash
-feature/fetch-products
-feat: fetch products using composable
-```
+feature/cart-system
+feat: implement cart state with Pinia
 
 ---
 
 ## ⚙️ Setup
 
-Install dependencies:
-
-```bash
 npm install
-```
 
 ---
 
 ## 💻 Development
 
-Start the development server:
-
-```bash
 npm run dev
-```
 
 Open:
-
-```text
 http://localhost:3000
-```
 
 ---
 
 ## 🏁 Production
 
-Build for production:
-
-```bash
 npm run build
-```
-
-Preview production build:
-
-```bash
 npm run preview
-```
 
 ---
 
-## 📌 Notes
+## 📌 Highlights
 
-This project focuses on **frontend architecture and best practices**, not just UI.
+* Designed with **real-world scalability in mind**
+* Focus on **maintainability and clean architecture**
+* Demonstrates **frontend engineering best practices**, not just UI
 
 ---
 
 ## 👤 Author
 
 **Nasim Molana**
-
 Frontend Developer (Vue / Nuxt)
+
+GitHub: https://github.com/nasim-molana
+LinkedIn: (your link)
 
 ---
 

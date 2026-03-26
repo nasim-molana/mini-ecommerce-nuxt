@@ -1,13 +1,8 @@
-<script setup>
-import { computed } from 'vue';
-
-const route = useRoute()
-
-const productId= computed(()=> route.params.id)
-
-const { data: product, pending, error }= useFetch(() => 
-  `https://fakestoreapi.com/products/${productId.value}`)
+<script setup lang="ts">
+import {useProductById} from '~/composables/useProductById'
+const { data: product, pending, error }= useProductById()
 </script>
+
 
 <template>
   <div class="p-10 max-w-5xl mx-auto">

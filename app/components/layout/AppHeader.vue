@@ -2,68 +2,60 @@
   <header class="bg-gray-800 text-white border-none">
     <div class="w-full">
       <div class="flex items-center justify-between h-16">
-        
-        <!-- Left: Logo -->
         <NuxtLink 
           to="/" 
           class="text-xl font-bold px-10"
-          @click="selectedCategory= null"
         >
           LOGO
         </NuxtLink>
 
-        <div class="flex gap-4" v-if="!loading && categories.length">
-          <button
-            @click="handleReset"
+        <div class="flex gap-4">
+          <NuxtLink
+            to="/"
             :class="[
               'text-sm px-2 py-1 rounded transition',
-              selectedCategory === null
+              activeCategory === null
                 ? 'bg-blue-600 text-white'
                 : 'text-white hover:text-blue-400'
             ]"
           >
             All
-          </button>
-          <button
-            v-for="cat in categories"
+          </NuxtLink>
+
+          <NuxtLink
+            v-for="cat in categories || []"
             :key="cat"
-            @click="handleCategoryClick(cat)"
-            :class="['text-sm px-2 py-1 rounded transition',
-              selectedCategory === cat
-              ? 'bg-blue-600 text-white'
-              : 'text-white hover:text-blue-400'
+            :to="`/category/${cat}`"
+            :class="[
+              'text-sm px-2 py-1 rounded transition',
+              activeCategory === cat
+                ? 'bg-blue-600 text-white'
+                : 'text-white hover:text-blue-400'
             ]"
           >
             {{ cat }}
-          </button>
+          </NuxtLink>
         </div>
 
-        <!-- Right: Cart Icon -->
         <div class="text-2xl cursor-pointer px-10">
-          🛒
+          Cart
         </div>
-
       </div>
     </div>
   </header>
 </template>
 
 <script setup lang="ts">
-import { useProducts } from '../../composables/useProducts';
-import { useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
+import { computed } from 'vue';
 
-const { categories, selectedCategory, loading } = useProducts()
+const route= useRoute()
+const activeCategory= computed(() => {
+  if (route.path.startsWith('/category/')) {
+    return route.params.slug
+  }
+  return null
+})
 
-const router= useRouter()
-
-const handleCategoryClick = (cat: string) => {
-  selectedCategory.value= cat
-  router.push('/')
-}
-
-const handleReset = () => {
-  selectedCategory.value = null
-  router.push('/')
-}
-
+const { data: categories } = useCategories()
 </script>

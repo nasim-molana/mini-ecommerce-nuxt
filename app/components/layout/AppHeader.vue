@@ -37,9 +37,16 @@
           </NuxtLink>
         </div>
 
-        <div class="text-2xl cursor-pointer px-10">
-          Cart
-        </div>
+        <NuxtLink to="/cart" class="relative text-xl px-10">
+          <div>
+            <Icon name="heroicons:shopping-cart" class="w-6 h-6" />
+            <span 
+              v-if="cart.totalItems > 0"
+              class="absolute -top-2 right-4 bg-red-500 text-white text-xs px-2 rounded-full">
+              {{  cart.totalItems }}
+            </span>
+          </div>
+        </NuxtLink>
       </div>
     </div>
   </header>
@@ -48,14 +55,17 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
 import { computed } from 'vue';
+import { useCart } from '~/stores/useCart';
 
 const route= useRoute()
 const activeCategory= computed(() => {
   if (route.path.startsWith('/category/')) {
-    return route.params.slug
+    return route.params.slug as string
   }
   return null
 })
 
 const { data: categories } = useCategories()
+
+const cart= useCart()
 </script>

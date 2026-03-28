@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { useCart } from '~/stores/useCart';
+
+const cart= useCart()
+
     type Product = {
         id: number
         name:string
@@ -10,6 +14,14 @@
         product: Product
     }>()
 
+    const handleAddToCart = () => {
+        cart.addToCart({
+            id: props.product.id,
+            title: props.product.name,
+            price: props.product.price,
+            image: props.product.bild
+        })
+    }
 </script>
 
 <template>
@@ -19,5 +31,12 @@
         </div>
         <h2 class="font-bold">{{ product.name }}</h2>
         <p class="text-gray-600">${{ product.price }}</p>
+        <button
+            @click.stop.prevent="handleAddToCart"
+            class="mt-2 bg-blue-600 text-white px-3 py-1 rounded"
+            >
+            Add to Cart
+        </button>
     </NuxtLink>
+
 </template>

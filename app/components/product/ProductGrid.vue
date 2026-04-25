@@ -2,16 +2,18 @@
 import ProductCard from './ProductCard.vue'
 import { computed } from 'vue';
 
-
 const props = defineProps<{
   products: any[]
 }>()
 
 const normalizedProducts = computed(() => {
+  if (!props.products) {
+    return [];
+  }
   return props.products.map((p) => ({
     id: p.id,
-    name: p.title,
-    bild: p.image,
+    name: p.name,
+    image: p.image,
     price: p.price,
     category: p.category
   }))

@@ -1,11 +1,25 @@
 type Product = {
-id: number
-title: string
-price: number
-category: string
-image: string
-}
+  id: number;
+  name: string;
+  price: number;
+  category: string;
+  image: string;
+};
 
 export const useFetchProducts = () => {
-  return useFetch<Product[]>('https://fakestoreapi.com/products')
-}
+  const { data, pending, error, refresh } = useAsyncData<Product[]>(
+    'products',
+    () => $fetch<Product[]>('/api/products'),
+    {
+      server: true,
+      default: () => []
+    }
+  );
+
+  return {
+    data,
+    pending,
+    error,
+    refresh
+  };
+};

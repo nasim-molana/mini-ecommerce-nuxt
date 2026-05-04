@@ -37,6 +37,12 @@
           </NuxtLink>
         </div>
 
+        <input
+          v-model="query" 
+          type="text"
+          placeholder="Search Products..."
+          class="px-3 py-1 rounded text-black" />
+
         <NuxtLink to="/cart" class="relative text-xl px-10">
           <div>
             <Icon name="heroicons:shopping-cart" class="w-6 h-6" />
@@ -56,16 +62,18 @@
 import { useRoute } from 'vue-router';
 import { computed } from 'vue';
 import { useCart } from '~/stores/useCart';
+import { useSearch } from '~/composables/useSearch';
+
 
 const route= useRoute()
+const cart= useCart()
+const { data: categories } = useCategories()
+const { query }= useSearch()
+
 const activeCategory= computed(() => {
   if (route.path.startsWith('/category/')) {
     return route.params.slug as string
   }
   return null
 })
-
-const { data: categories } = useCategories()
-
-const cart= useCart()
 </script>

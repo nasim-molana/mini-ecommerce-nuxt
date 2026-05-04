@@ -1,7 +1,7 @@
 
 type Product = {
   id: number
-  title: string
+  name: string
   price: number
   category: string
   image: string
@@ -9,8 +9,14 @@ type Product = {
 }
 
 export const useProductById = () => {
-    const route = useRoute()
-    const productId= computed(()=> String(route.params.id))
+  const route = useRoute()
+  const productId = computed(() => String(route.params.id))
 
-    return useFetch<Product>(() => `https://fakestoreapi.com/products/${productId.value}`)
+  return useAsyncData<Product>(
+    () => `product-${productId.value}`,
+    () => $fetch<Product>(`/api/products/${productId.value}`),
+    {
+      server: true
+    }
+  )
 }

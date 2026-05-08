@@ -1,16 +1,8 @@
 <script setup lang="ts">
-
-type Category = {
-  name: string
-  slug: string
-  children: {
-    name: string
-    slug: string
-  }[]
-}
+import type { CategoryTreeItem } from '~/types/category'
 
 const props= defineProps<{
-    categories: Category[]
+    categories: CategoryTreeItem[]
 }>()
 
 const activeCategory= ref<string | null>(null)

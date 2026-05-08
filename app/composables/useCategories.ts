@@ -1,7 +1,4 @@
-
-type Product = {
-  category: string
-}
+import type { Product } from '~/types/product'
 
 export const useCategories = () => {
   return useAsyncData<string[]>(

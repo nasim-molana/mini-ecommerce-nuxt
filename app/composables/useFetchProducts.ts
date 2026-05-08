@@ -1,10 +1,4 @@
-type Product = {
-  id: number;
-  name: string;
-  price: number;
-  category: string;
-  image: string;
-};
+import type { Product } from '~/types/product'
 
 export const useFetchProducts = () => {
   const { data, pending, error, refresh } = useAsyncData<Product[]>(
@@ -14,12 +8,12 @@ export const useFetchProducts = () => {
       server: true,
       default: () => []
     }
-  );
+  )
 
   return {
     data,
     pending,
     error,
     refresh
-  };
-};
+  }
+}

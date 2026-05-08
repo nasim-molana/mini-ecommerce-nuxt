@@ -47,16 +47,21 @@ This project is designed as a **real-world portfolio application** to demonstrat
 ### 🔐 Authentication (Mock)
 
 * Login / Logout (local storage based)
-* Protected routes (e.g. checkout)
+* Sign-in UI has not been implemented yet (`/login`)
+* Route middleware file exists but is not ready (`app/middleware/auth.ts`)
 
 ### ⚙️ Data Handling
 
-* Centralized API layer (`useApi`)
-* Composables for business logic:
+* Server API endpoints for product data:
 
-  * `useProducts`
-  * `useCart`
+  * `/api/products`
+  * `/api/products/[id]`
+* Composables for business logic and data fetching:
+
+  * `useFetchProducts`
+  * `useProductById`
   * `useCategories`
+  * `useSearch`
 * Loading, error, and empty states
 
 ### 🧠 Architecture
@@ -72,21 +77,21 @@ This project is designed as a **real-world portfolio application** to demonstrat
 
 ## 🏗 Project Structure
 
+app/
 components/
-ui/
 layout/
 navigation/
 product/
-cart/
 
 composables/
-useApi.ts
-useProducts.ts
+useFetchProducts.ts
+useProductById.ts
 useCategories.ts
-useCart.ts
+useSearch.ts
+useProductState.ts
 
 stores/
-cart.ts
+useCart.ts
 
 pages/
 index.vue
@@ -103,8 +108,10 @@ category.ts
 middleware/
 auth.ts
 
-constants/
-api.ts
+server/
+api/
+products.get.ts
+products/[id].get.ts
 
 ---
 

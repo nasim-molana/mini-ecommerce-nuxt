@@ -1,20 +1,12 @@
-
-type Product = {
-  id: number
-  name: string
-  price: number
-  category: string
-  image: string
-  description: string
-}
+import type { ProductDetails } from '~/types/product'
 
 export const useProductById = () => {
   const route = useRoute()
   const productId = computed(() => String(route.params.id))
 
-  return useAsyncData<Product>(
+  return useAsyncData<ProductDetails>(
     () => `product-${productId.value}`,
-    () => $fetch<Product>(`/api/products/${productId.value}`),
+    () => $fetch<ProductDetails>(`/api/products/${productId.value}`),
     {
       server: true
     }

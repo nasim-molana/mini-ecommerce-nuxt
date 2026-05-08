@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useCart } from '~/stores/useCart'
-
 const cart = useCart()
 </script>
 
@@ -31,7 +29,7 @@ const cart = useCart()
           <p>${{ item.price }}</p>
         </div>
 
-        <div class="flex item-center gap-2">
+        <div class="flex items-center gap-2">
           <button
             :disabled="item.quantity === 1" 
             @click="cart.updateQuantity(item.id, item.quantity-1)"
@@ -43,6 +41,7 @@ const cart = useCart()
             Qty: {{ item.quantity }}
           </span>
           <button
+            :disabled="item.quantity <= 1"
             @click="cart.updateQuantity(item.id, item.quantity+1)"
           >
             +

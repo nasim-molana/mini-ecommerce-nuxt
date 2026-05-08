@@ -1,14 +1,8 @@
 <script setup lang="ts">
 import { useCart } from '~/stores/useCart';
+import type { Product } from '~/types/product'
 
 const cart = useCart();
-
-type Product = {
-  id: number;
-  name: string;
-  image: string; // Changed from 'bild' to 'image'
-  price: number;
-};
 
 const props = defineProps<{
   product: Product;

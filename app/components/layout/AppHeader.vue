@@ -62,7 +62,6 @@
 import { useRoute } from 'vue-router';
 import { computed } from 'vue';
 import { useCart } from '~/stores/useCart';
-import { useSearch } from '~/composables/useSearch';
 
 
 const route= useRoute()

@@ -3,7 +3,7 @@ import type { CartItem, CartProductInput } from '~/types/cart'
 
 export const useCart = defineStore('cart', {
   state: () => ({
-    items: [] as CartItem[]
+    items: [] as CartItem[] 
   }),
 
   getters: {

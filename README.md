@@ -4,6 +4,26 @@ A **production-ready frontend e-commerce application** built with **Nuxt**, **Vu
 
 ---
 
+## Design Resources
+
+### Figma
+
+Homepage UI/UX Design:
+- Responsive Layout
+- UI Components
+- Product Card Design
+- Header & Footer Structure
+
+Figma Link:
+[View Figma Design](https://www.figma.com/make/FSqLxFaAz6o3P7bNT8TQKl/Enhance-spacing-and-mobile-design?code-node-id=0-9&p=f&t=CDQxG8RMp7zO2eu6-0&fullscreen=1)
+
+
+### Homepage Preview
+
+![Homepage Preview](public/images/homepage-preview.png)
+
+---
+
 ## 🚀 Tech Stack
 
 * **Nuxt 3**

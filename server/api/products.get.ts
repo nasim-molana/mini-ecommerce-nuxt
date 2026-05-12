@@ -35,7 +35,7 @@ const FALLBACK_CATEGORY_LABELS: Record<string, string> = {
 
 export default defineEventHandler(async () => {
   const config = useRuntimeConfig();
-  const apiBase = config.public.apiBase;
+  const apiBase = config.directusUrl;
   const fields = 'id,name,price,main_image,category.id,category.slug,category.name';
   const categoryMap = new Map<string, string>();
 

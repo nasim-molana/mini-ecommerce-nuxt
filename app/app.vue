@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-  const cart= useCart()
+  const cart = useCart()
 
   onMounted(() => {
     cart.loadFromStorage()

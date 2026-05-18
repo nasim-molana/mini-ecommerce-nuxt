@@ -14,16 +14,16 @@
 
         <NuxtLink
         v-for="cat in categories || []"
-        :key="cat"
-        :to="`/category/${cat}`"
+        :key="cat.slug"
+        :to="`/category/${cat.slug}`"
         :class="[
             'text-sm px-2 py-1 rounded transition',
-            activeCategory === cat
+            activeCategory === cat.slug
             ? 'bg-[#F97316] text-white'
             : 'text-[#111827] hover:text-[#F97316]'
         ]"
         >
-        {{ cat }}
+        {{ cat.name }}
         </NuxtLink>
     </div>
 </template>

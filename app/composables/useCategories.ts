@@ -1,18 +1,13 @@
-import type { Product } from '~/types/product'
+import type { Category } from '~/types/category'
 
 export const useCategories = () => {
-  return useAsyncData<string[]>(
+  return useAsyncData<Category[]>(
     'categories',
-    async () => {
-      const products = await $fetch<Product[]>('/api/products')
-      const categories = products
-        .map((product) => String(product.category).trim())
-        .filter(Boolean)
-
-      return [...new Set(categories)]
-    },
+    () => $fetch<Category[]>('/api/categories'),
     {
-      default: () => []
+      default: () => [],
+      server: true,
+      lazy: false
     }
   )
 } 

@@ -5,7 +5,7 @@ import AppHeader from '~/components/layout/AppHeader.vue';
 
 <template>
     <div>
-        <header class="bg-gray-800 shadow p-4">
+        <header class="bg-[#FFF7ED] shadow p-4">
             <AppHeader />
         </header>
         <main class="pt-5 p-6">

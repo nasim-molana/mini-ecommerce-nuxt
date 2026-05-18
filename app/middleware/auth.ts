@@ -6,4 +6,4 @@ export default defineNuxtRouteMiddleware((to) => {
     path: '/login',
     query: { redirect: to.fullPath },
   })
-})
+}) 

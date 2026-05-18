@@ -1,3 +1,5 @@
+import { fetchDirectusCategoryMap } from '../../utils/directusCategories'
+
 type DirectusProduct = {
   id: number;
   name: string;
@@ -18,16 +20,6 @@ type DirectusSingleResponse = {
   data: DirectusProduct;
 };
 
-type DirectusCategory = {
-  id: number | string;
-  slug?: string;
-  name?: string;
-};
-
-type DirectusCategoryResponse = {
-  data: DirectusCategory[];
-};
-
 const FALLBACK_CATEGORY_LABELS: Record<string, string> = {
   '1': 'fragrances',
   '2': 'beauty',
@@ -39,20 +31,7 @@ export default defineEventHandler(async (event) => {
   const apiBase = config.directusUrl;
   const id = getRouterParam(event, 'id');
   const fields = 'id,name,description,price,main_image,category.id,category.slug,category.name';
-  const categoryMap = new Map<string, string>();
-
-  try {
-    const categoriesResponse = await $fetch<DirectusCategoryResponse>(
-      `${apiBase}/items/categories?fields=id,slug,name`
-    );
-    for (const category of categoriesResponse?.data || []) {
-      const key = String(category.id);
-      const value = category.slug || category.name;
-      if (value) categoryMap.set(key, value);
-    }
-  } catch {
-    // Ignore category-map failures; product details should still load.
-  }
+  const categoryMap = await fetchDirectusCategoryMap(apiBase);
 
   if (!id) {
     throw createError({

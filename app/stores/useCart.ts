@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import type { CartItem, CartProductInput } from '~/types/cart'
+import type { CartItem, CartProductInput } from '~/types/cart' 
 
 export const useCart = defineStore('cart', {
   state: () => ({
@@ -47,7 +47,6 @@ export const useCart = defineStore('cart', {
         this.saveToStorage()
         return
       }
-
       const item = this.items.find((item) => item.id === id)
       if (item) {
         item.quantity = quantity
@@ -56,7 +55,6 @@ export const useCart = defineStore('cart', {
     }
   }
 })
-
 
 function safeParse(data: string | null): CartItem[] {
   try {

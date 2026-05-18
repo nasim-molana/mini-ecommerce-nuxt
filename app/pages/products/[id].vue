@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { useProductById } from '~/composables/useProductById'
-
+ 
 const { data: product, pending, error } = useProductById()
 const { addProductToCart } = useAddToCart()
 

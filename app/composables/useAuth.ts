@@ -22,7 +22,7 @@ const REFRESH_KEY = 'refresh_token'
 
 export function useAuth() {
   const config = useRuntimeConfig()
-  const apiBase = config.public.apiBase
+  const apiBase = config.public.apiBase 
 
   const user = useState<User | null>('auth:user', () => null)
   const accessToken = useState<string | null>('auth:accessToken', () => null)

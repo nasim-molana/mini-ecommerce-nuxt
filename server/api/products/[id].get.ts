@@ -1,28 +1,13 @@
 import { fetchDirectusCategoryMap } from '../../utils/directusCategories'
 import {
-  pickProductCategoryField,
-  resolveProductCategory,
-  type ProductCategorySource
-} from '../../utils/resolveProductCategory'
-
-type DirectusProduct = {
-  id: number
-  name: string
-  description: string
-  price: number | string
-  category?: ProductCategorySource
-  product_category?: ProductCategorySource
-  main_image: string | null
-}
+  mapDirectusProduct,
+  PRODUCT_LIST_FIELDS,
+  type DirectusProductRaw
+} from '../../utils/mapDirectusProduct'
 
 type DirectusSingleResponse = {
-  data: DirectusProduct
+  data: DirectusProductRaw
 }
-
-const PRODUCT_FIELDS =
-  'id,name,description,price,main_image,' +
-  'category.id,category.slug,category.name,category.title,' +
-  'product_category.id,product_category.slug,product_category.name,product_category.title'
 
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
@@ -40,7 +25,7 @@ export default defineEventHandler(async (event) => {
   let result: DirectusSingleResponse
   try {
     result = await $fetch<DirectusSingleResponse>(
-      `${apiBase}/items/products/${id}?fields=${encodeURIComponent(PRODUCT_FIELDS)}`
+      `${apiBase}/items/products/${id}?fields=${encodeURIComponent(PRODUCT_LIST_FIELDS)}`
     )
   } catch (error: unknown) {
     const statusCode = typeof error === 'object' && error !== null && 'statusCode' in error
@@ -64,14 +49,7 @@ export default defineEventHandler(async (event) => {
   const product = result.data
 
   return {
-    id: product.id,
-    name: product.name,
-    description: product.description,
-    price: Number(product.price),
-    category: resolveProductCategory(
-      pickProductCategoryField(product),
-      categoryMap
-    ),
-    image: product.main_image ? `${apiBase}/assets/${product.main_image}` : ''
+    ...mapDirectusProduct(product, apiBase, categoryMap),
+    description: String(product.description ?? '')
   }
 })

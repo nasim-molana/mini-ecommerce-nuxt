@@ -1,30 +1,21 @@
-import { ref, watch } from 'vue'
-
 const query = ref('')
-const debouncedQuery = ref('')
 
-let timeout: ReturnType<typeof setTimeout> | undefined
-
-function applySearchNow() {
-  if (timeout !== undefined) {
-    clearTimeout(timeout)
-    timeout = undefined
-  }
-  debouncedQuery.value = query.value
+export function submitSearch() {
+  const q = query.value.trim()
+  return navigateTo({
+    path: '/products',
+    query: q ? { q } : {}
+  })
 }
 
-watch(query, (val) => {
-  if (timeout !== undefined) clearTimeout(timeout)
-  timeout = setTimeout(() => {
-    debouncedQuery.value = val
-    timeout = undefined
-  }, 300)
-})
+export function syncSearchQueryFromRoute(routeQuery: string | undefined) {
+  query.value = String(routeQuery ?? '').trim()
+}
 
 export const useSearch = () => {
   return {
     query,
-    debouncedQuery,
-    applySearchNow
+    submitSearch,
+    syncSearchQueryFromRoute
   }
 }

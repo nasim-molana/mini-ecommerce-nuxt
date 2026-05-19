@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useFetchProducts } from '~/composables/useFetchProducts'
-import { useSearch } from '~/composables/useSearch'
 import ProductGrid from '~/components/product/ProductGrid.vue'
 
 const route = useRoute()
@@ -9,20 +8,11 @@ const route = useRoute()
 const slug = computed(() => String(route.params.slug))
 
 const { data, pending, error } = useFetchProducts()
-const { debouncedQuery } = useSearch()
 
 const filteredProducts = computed(() => {
   if (!data.value) return []
 
-  const categoryProducts = data.value.filter(
-    (p) => p.category === slug.value
-  )
-
-  if (!debouncedQuery.value) return categoryProducts
-
-  return categoryProducts.filter((p) =>
-    p.name.toLowerCase().includes(debouncedQuery.value.toLowerCase())
-  )
+  return data.value.filter((p) => p.category === slug.value)
 })
 </script>
 
@@ -40,9 +30,9 @@ const filteredProducts = computed(() => {
       No products found
     </div>
 
-    <ProductGrid 
+    <ProductGrid
       v-else
-      :products="filteredProducts" 
+      :products="filteredProducts"
     />
   </div>
 </template>

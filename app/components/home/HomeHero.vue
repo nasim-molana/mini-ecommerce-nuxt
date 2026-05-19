@@ -33,7 +33,7 @@
             Discover clean and modern products with a smooth shopping experience.
           </p>
           <NuxtLink
-            to="#products"
+            to="/products"
             class="mt-8 inline-flex items-center justify-center rounded-md bg-[#F97316] px-8 py-3 text-md font-semibold text-white shadow-sm transition hover:bg-[#ea580c] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F97316]"
           >
             Shop Now

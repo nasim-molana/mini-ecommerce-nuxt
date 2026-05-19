@@ -1,10 +1,10 @@
 <template>
     <div class="flex gap-4">
         <NuxtLink
-         to="/"
+         to="/products"
          :class="[
              'text-sm px-2 py-1 rounded transition',
-             activeCategory === null
+             isAllActive
              ? 'bg-[#F97316] text-white'
              : 'text-[#111827] hover:text-[#F97316]'
          ]"
@@ -18,7 +18,7 @@
         :to="`/category/${cat.slug}`"
         :class="[
             'text-sm px-2 py-1 rounded transition',
-            activeCategory === cat.slug
+            activeCategorySlug === cat.slug
             ? 'bg-[#F97316] text-white'
             : 'text-[#111827] hover:text-[#F97316]'
         ]"
@@ -35,10 +35,12 @@ const route = useRoute()
 const { data: categories } = useCategories()
 
 
-const activeCategory = computed(() => {
-if (route.path.startsWith('/category/')) {
-return route.params.slug as string
-}
-return null
-})    
+const isAllActive = computed(() => route.path === '/products')
+
+const activeCategorySlug = computed(() => {
+  if (route.path.startsWith('/category/')) {
+    return route.params.slug as string
+  }
+  return null
+})
 </script>

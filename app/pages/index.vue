@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import HomeHero from '~/components/home/HomeHero.vue'
 import ProductGrid from '~/components/product/ProductGrid.vue'
 import { useFetchProducts } from '~/composables/useFetchProducts'
 import { useSearch } from '~/composables/useSearch'
@@ -19,7 +20,8 @@ const filteredProducts = computed(() => {
 </script>
 
 <template>
-  <div class="px-10">
+  <HomeHero />
+  <div id="products" class="px-10 pt-6">
     <div v-if="pending">Loading...</div>
 
     <div v-else-if="error">Error loading products</div>

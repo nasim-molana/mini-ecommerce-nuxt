@@ -1,6 +1,6 @@
 <template>
   <section
-    class="relative -mx-6 -mt-5 overflow-hidden bg-[#FFF7ED]"
+    class="relative -mt-5 w-full overflow-hidden bg-[#FFF7ED]"
     aria-labelledby="hero-heading"
   >
     <!-- Soft orange blobs -->
@@ -44,7 +44,7 @@
           <img
             src="/images/hero-product.png"
             alt=""
-            class="pointer-events-none absolute right-0 top-1/2 h-[115%] w-auto max-w-none -translate-y-1/2 translate-x-8 object-contain opacity-20 select-none"
+            class="pointer-events-none absolute right-0 top-1/2 h-full w-auto max-w-full -translate-y-1/2 object-contain opacity-20 select-none"
             aria-hidden="true"
           />
           <img

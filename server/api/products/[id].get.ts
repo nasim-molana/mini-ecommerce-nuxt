@@ -1,59 +1,56 @@
 import { fetchDirectusCategoryMap } from '../../utils/directusCategories'
+import {
+  pickProductCategoryField,
+  resolveProductCategory,
+  type ProductCategorySource
+} from '../../utils/resolveProductCategory'
 
 type DirectusProduct = {
-  id: number;
-  name: string;
-  description: string;
-  price: number | string;
-  category:
-    | number
-    | string
-    | {
-        id?: number | string;
-        slug?: string;
-        name?: string;
-      };
-  main_image: string | null;
-};
+  id: number
+  name: string
+  description: string
+  price: number | string
+  category?: ProductCategorySource
+  product_category?: ProductCategorySource
+  main_image: string | null
+}
 
 type DirectusSingleResponse = {
-  data: DirectusProduct;
-};
+  data: DirectusProduct
+}
 
-const FALLBACK_CATEGORY_LABELS: Record<string, string> = {
-  '1': 'fragrances',
-  '2': 'beauty',
-  '3': 'furniture'
-};
+const PRODUCT_FIELDS =
+  'id,name,description,price,main_image,' +
+  'category.id,category.slug,category.name,category.title,' +
+  'product_category.id,product_category.slug,product_category.name,product_category.title'
 
 export default defineEventHandler(async (event) => {
-  const config = useRuntimeConfig();
-  const apiBase = config.directusUrl;
-  const id = getRouterParam(event, 'id');
-  const fields = 'id,name,description,price,main_image,category.id,category.slug,category.name';
-  const categoryMap = await fetchDirectusCategoryMap(apiBase);
+  const config = useRuntimeConfig()
+  const apiBase = config.directusUrl
+  const id = getRouterParam(event, 'id')
+  const categoryMap = await fetchDirectusCategoryMap(apiBase)
 
   if (!id) {
     throw createError({
       statusCode: 400,
       statusMessage: 'Product id is required'
-    });
+    })
   }
 
-  let result: DirectusSingleResponse;
+  let result: DirectusSingleResponse
   try {
     result = await $fetch<DirectusSingleResponse>(
-      `${apiBase}/items/products/${id}?fields=${encodeURIComponent(fields)}`
-    );
+      `${apiBase}/items/products/${id}?fields=${encodeURIComponent(PRODUCT_FIELDS)}`
+    )
   } catch (error: unknown) {
     const statusCode = typeof error === 'object' && error !== null && 'statusCode' in error
       ? Number((error as { statusCode?: number }).statusCode)
-      : undefined;
+      : undefined
 
     if (statusCode === 403) {
-      result = await $fetch<DirectusSingleResponse>(`${apiBase}/items/products/${id}`);
+      result = await $fetch<DirectusSingleResponse>(`${apiBase}/items/products/${id}`)
     } else {
-      throw error;
+      throw error
     }
   }
 
@@ -61,25 +58,20 @@ export default defineEventHandler(async (event) => {
     throw createError({
       statusCode: 404,
       statusMessage: 'Product not found'
-    });
+    })
   }
 
-  const product = result.data;
-  const resolveCategory = (category: DirectusProduct['category']) => {
-    if (category && typeof category === 'object') {
-      return category.slug || category.name || String(category.id ?? '');
-    }
-
-    const raw = String(category ?? '');
-    return categoryMap.get(raw) || FALLBACK_CATEGORY_LABELS[raw] || raw;
-  };
+  const product = result.data
 
   return {
     id: product.id,
     name: product.name,
     description: product.description,
     price: Number(product.price),
-    category: resolveCategory(product.category),
+    category: resolveProductCategory(
+      pickProductCategoryField(product),
+      categoryMap
+    ),
     image: product.main_image ? `${apiBase}/assets/${product.main_image}` : ''
-  };
-});
+  }
+})

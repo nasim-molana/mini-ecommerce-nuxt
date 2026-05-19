@@ -1,8 +1,8 @@
 import type { Category } from '~/types/category'
 
 export const useCategories = () => {
-  return useAsyncData<Category[]>(
-    'categories',
+  const result = useAsyncData<Category[]>(
+    'nav-categories',
     () => $fetch<Category[]>('/api/categories'),
     {
       default: () => [],
@@ -10,4 +10,14 @@ export const useCategories = () => {
       lazy: false
     }
   )
-} 
+
+  if (import.meta.client) {
+    onMounted(async () => {
+      if (!result.data.value?.length && result.status.value !== 'pending') {
+        await result.refresh()
+      }
+    })
+  }
+
+  return result
+}

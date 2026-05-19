@@ -1,52 +1,47 @@
 import { fetchDirectusCategoryMap } from '../utils/directusCategories'
+import {
+  pickProductCategoryField,
+  resolveProductCategory,
+  type ProductCategorySource
+} from '../utils/resolveProductCategory'
 
 type DirectusProduct = {
-  id: number;
-  name: string;
-  price: number | string;
-  category:
-    | number
-    | string
-    | {
-        id?: number | string;
-        slug?: string;
-        name?: string;
-      };
-  main_image: string | null;
-};
+  id: number
+  name: string
+  price: number | string
+  category?: ProductCategorySource
+  product_category?: ProductCategorySource
+  main_image: string | null
+}
 
 type DirectusResponse = {
-  data: DirectusProduct[];
-};
+  data: DirectusProduct[]
+}
 
-const FALLBACK_CATEGORY_LABELS: Record<string, string> = {
-  '1': 'fragrances',
-  '2': 'beauty',
-  '3': 'furniture'
-};
+const PRODUCT_FIELDS =
+  'id,name,price,main_image,' +
+  'category.id,category.slug,category.name,category.title,' +
+  'product_category.id,product_category.slug,product_category.name,product_category.title'
 
 export default defineEventHandler(async () => {
-  const config = useRuntimeConfig();
-  const apiBase = config.directusUrl;
-  const fields = 'id,name,price,main_image,category.id,category.slug,category.name';
-  const categoryMap = await fetchDirectusCategoryMap(apiBase);
+  const config = useRuntimeConfig()
+  const apiBase = config.directusUrl
+  const categoryMap = await fetchDirectusCategoryMap(apiBase)
 
-  let result: DirectusResponse;
+  let result: DirectusResponse
   try {
     result = await $fetch<DirectusResponse>(
-      `${apiBase}/items/products?fields=${encodeURIComponent(fields)}`
-    );
+      `${apiBase}/items/products?fields=${encodeURIComponent(PRODUCT_FIELDS)}`
+    )
   } catch (error: unknown) {
     const statusCode = typeof error === 'object' && error !== null && 'statusCode' in error
       ? Number((error as { statusCode?: number }).statusCode)
-      : undefined;
+      : undefined
 
-    // Some Directus public roles cannot read relational category fields.
-    // Fallback to base product fetch so homepage never crashes.
     if (statusCode === 403) {
-      result = await $fetch<DirectusResponse>(`${apiBase}/items/products`);
+      result = await $fetch<DirectusResponse>(`${apiBase}/items/products`)
     } else {
-      throw error;
+      throw error
     }
   }
 
@@ -54,24 +49,17 @@ export default defineEventHandler(async () => {
     throw createError({
       statusCode: 502,
       statusMessage: 'Invalid data format received from upstream API'
-    });
+    })
   }
-
-  const resolveCategory = (category: DirectusProduct['category']) => {
-    if (category && typeof category === 'object') {
-      return category.slug || category.name || String(category.id ?? '');
-    }
-
-    const raw = String(category ?? '');
-    return categoryMap.get(raw) || FALLBACK_CATEGORY_LABELS[raw] || raw;
-  };
 
   return result.data.map((product) => ({
     id: product.id,
     name: product.name,
     price: Number(product.price),
-    category: resolveCategory(product.category),
+    category: resolveProductCategory(
+      pickProductCategoryField(product),
+      categoryMap
+    ),
     image: product.main_image ? `${apiBase}/assets/${product.main_image}` : ''
-  }));
-});
-
+  }))
+})

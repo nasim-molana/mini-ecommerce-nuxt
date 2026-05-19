@@ -14,24 +14,39 @@ const displayName = computed(() => {
 </script>
 
 <template>
-  <section class="mx-auto max-w-2xl px-6 py-12">
-    <h1 class="text-3xl font-bold text-slate-900">Checkout</h1>
+  <section class="mx-auto max-w-7xl px-6 py-6 md:px-10">
+    <div class="mx-auto max-w-4xl">
+      <h1 class="text-2xl font-bold text-[#111827] md:text-3xl">
+        Checkout
+      </h1>
 
-    <p class="mt-4 text-slate-600">
-      Signed in as
-      <span class="font-medium text-slate-900">{{ displayName }}</span>
-    </p>
-
-    <div class="mt-8 rounded border border-slate-200 p-4">
-      <h2 class="text-lg font-semibold">Order summary</h2>
-      <p class="mt-2 text-sm text-slate-600">
-        {{ cart.totalItems }} item(s) — total
-        <span class="font-medium">${{ cart.totalPrice.toFixed(2) }}</span>
+      <p class="mt-4 text-sm text-[#6B7280] md:text-base">
+        Signed in as
+        <span class="font-medium text-[#111827]">{{ displayName }}</span>
       </p>
-    </div>
 
-    <p class="mt-6 text-sm text-slate-500">
-      Payment step is not implemented yet.
-    </p>
+      <div class="mt-8 rounded-lg border border-stone-200 bg-white p-6 shadow-sm">
+        <h2 class="text-lg font-semibold text-[#111827]">
+          Order summary
+        </h2>
+        <p class="mt-2 text-sm text-[#6B7280]">
+          {{ cart.totalItems }} item(s) — total
+          <span class="font-bold text-[#111827]">
+            {{ cart.totalPrice.toFixed(2) }} $
+          </span>
+        </p>
+      </div>
+
+      <p class="mt-6 text-sm text-[#6B7280]">
+        Payment step is not implemented yet.
+      </p>
+
+      <NuxtLink
+        to="/cart"
+        class="mt-6 inline-flex text-sm font-medium text-[#F97316] transition hover:text-[#ea580c]"
+      >
+        ← Back to cart
+      </NuxtLink>
+    </div>
   </section>
 </template>

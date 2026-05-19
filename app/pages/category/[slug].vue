@@ -17,7 +17,7 @@ const filteredProducts = computed(() => {
 </script>
 
 <template>
-  <div class="p-10">
+  <div class="mx-auto max-w-7xl px-6 py-6 md:px-10">
     <h1 class="text-2xl font-bold mb-6">
       Category: {{ slug }}
     </h1>

@@ -2,6 +2,7 @@
     <div class="flex gap-4">
         <NuxtLink
          to="/products"
+         @click="clearSearch"
          :class="[
              'text-md px-2 py-1 rounded transition',
              isAllActive
@@ -16,6 +17,7 @@
         v-for="cat in categories || []"
         :key="cat.slug"
         :to="`/category/${cat.slug}`"
+        @click="clearSearch"
         :class="[
             'text-md px-2 py-1 rounded transition',
             activeCategorySlug === cat.slug
@@ -33,9 +35,8 @@ import { useRoute } from 'vue-router'
 
 const route = useRoute()
 const { data: categories } = useCategories()
+const { clearSearch } = useSearch()
 
-
-const isAllActive = computed(() => route.path === '/products')
 
 const activeCategorySlug = computed(() => {
   if (route.path.startsWith('/category/')) {
@@ -43,4 +44,6 @@ const activeCategorySlug = computed(() => {
   }
   return null
 })
+
+const isAllActive = computed(() => activeCategorySlug.value === null)
 </script>

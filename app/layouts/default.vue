@@ -9,7 +9,7 @@ import AppFooter from '~/components/layout/AppFooter.vue'
       <AppHeader />
     </header>
 
-    <main class="flex-1 pt-5">
+    <main class="flex-1 pt-5 bg-[#FFF7ED]">
       <slot />
     </main>
 

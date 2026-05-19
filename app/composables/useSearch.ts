@@ -12,10 +12,15 @@ export function syncSearchQueryFromRoute(routeQuery: string | undefined) {
   query.value = String(routeQuery ?? '').trim()
 }
 
+export function clearSearch() {
+  query.value = ''
+}
+
 export const useSearch = () => {
   return {
     query,
     submitSearch,
-    syncSearchQueryFromRoute
+    syncSearchQueryFromRoute,
+    clearSearch
   }
 }

@@ -3,7 +3,7 @@
         <NuxtLink
          to="/products"
          :class="[
-             'text-sm px-2 py-1 rounded transition',
+             'text-md px-2 py-1 rounded transition',
              isAllActive
              ? 'bg-[#F97316] text-white'
              : 'text-[#111827] hover:text-[#F97316]'
@@ -17,7 +17,7 @@
         :key="cat.slug"
         :to="`/category/${cat.slug}`"
         :class="[
-            'text-sm px-2 py-1 rounded transition',
+            'text-md px-2 py-1 rounded transition',
             activeCategorySlug === cat.slug
             ? 'bg-[#F97316] text-white'
             : 'text-[#111827] hover:text-[#F97316]'

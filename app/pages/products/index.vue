@@ -21,7 +21,7 @@ const filteredProducts = computed(() => {
 </script>
 
 <template>
-  <div id="products" class=" mx-auto max-w-7xl px-6 pt-6 md:px-10">
+  <div id="products" class="mx-auto max-w-7xl px-6 pt-6 md:px-10">
     <h1 class="mb-6 text-2xl font-bold text-[#111827]">
       <template v-if="searchQuery">
         Search results for “{{ searchQuery }}”

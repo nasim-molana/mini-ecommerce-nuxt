@@ -14,7 +14,7 @@ const handleAddToCart = () => {
     <div v-else-if="error">Error loading product...</div>
 
     <div v-else-if="product" class="flex gap-10">
-      <div class="w-1/2">
+      <div class="w-1/2 bg-[#FFF]">
         <img :src="product.image" class="w-full h-96 object-contain border rounded py-2">
       </div>
       <div class="w-1/2 flex flex-col gap-4">

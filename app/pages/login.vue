@@ -44,7 +44,7 @@ const onSubmit = async () => {
           type="email"
           required
           autocomplete="email"
-          class="mt-1 w-full rounded border border-slate-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
+          class="mt-1 w-full rounded border border-slate-300 px-3 py-2 focus:border-[#F97316] focus:outline-none"
         />
       </div>
 
@@ -55,7 +55,7 @@ const onSubmit = async () => {
           type="password"
           required
           autocomplete="current-password"
-          class="mt-1 w-full rounded border border-slate-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
+          class="mt-1 w-full rounded border border-slate-300 px-3 py-2 focus:border-[#F97316] focus:outline-none"
         />
       </div>
 
@@ -64,7 +64,7 @@ const onSubmit = async () => {
       <button
         type="submit"
         :disabled="loading"
-        class="w-full rounded bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-700 disabled:opacity-60"
+        class="w-full rounded bg-[#F97316] px-4 py-2 font-medium text-white hover:bg-[#ea580c] disabled:opacity-60"
       >
         {{ loading ? 'Signing in…' : 'Sign in' }}
       </button>

@@ -9,7 +9,7 @@ const handleAddToCart = () => {
 </script>
 
 <template>
-  <div class="p-10 max-w-5xl mx-auto">
+  <div class="p-6 mb-16 max-w-5xl mx-auto">
     <div v-if="pending">Loading...</div>
     <div v-else-if="error">Error loading product...</div>
 
@@ -27,7 +27,7 @@ const handleAddToCart = () => {
         <div>
           <button
             @click.prevent="handleAddToCart"
-            class="mt-1 bg-blue-600 text-white px-3 py-1 rounded"
+            class="mt-1 bg-[#F97316] bg-[''] text-white px-3 py-1 rounded"
           >
             Add to Cart
           </button>

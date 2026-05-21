@@ -4,12 +4,13 @@ import AppFooter from '~/components/layout/AppFooter.vue'
 </script>
 
 <template>
-  <div class="flex min-h-screen flex-col overflow-x-hidden">
-    <header class="p-4 shadow">
-      <AppHeader />
-    </header>
+  <div class="flex min-h-screen flex-col">
+    <AppHeader />
 
-    <main class="flex-1 pt-5 bg-[#FFF7ED]">
+    <main
+      class="flex-1 bg-[#FFF7ED]"
+      style="padding-top: var(--app-header-offset, 4rem)"
+    >
       <slot />
     </main>
 

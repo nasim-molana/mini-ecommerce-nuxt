@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import PopularProductCard from '~/components/product/PopularProductCard.vue'
+import ProductGrid from '~/components/product/ProductGrid.vue'
 
 const { data: products, pending, error } = useFeaturedProducts()
 </script>
-
 <template>
   <section class="bg-[#FFF7ED] px-6 py-10 md:px-10 md:py-12">
-    <div class="mx-auto max-w-7xl">
+    <div class="mx-auto max-w-7xl md:px-6">
       <div class="mb-8 flex flex-wrap items-center justify-between gap-4">
         <h2 class="text-2xl font-bold text-[#111827] md:text-3xl">
           Popular Products
@@ -34,16 +33,6 @@ const { data: products, pending, error } = useFeaturedProducts()
         No featured products yet.
       </div>
 
-      <div
-        v-else
-        class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4"
-      >
-        <PopularProductCard
-          v-for="product in products"
-          :key="product.id"
-          :product="product"
-        />
-      </div>
-    </div>
+      <ProductGrid v-else :products="products" />    </div>
   </section>
 </template>

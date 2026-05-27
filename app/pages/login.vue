@@ -1,5 +1,4 @@
 <script setup lang="ts">
-definePageMeta({ layout: 'default' })
 
 const auth = useAuth()
 const route = useRoute()
@@ -32,7 +31,7 @@ const onSubmit = async () => {
 </script>
 
 <template>
-  <section class="mx-auto max-w-md px-6 py-12">
+  <section class="mx-auto max-w-lg px-6 py-8 my-10 border rounded-lg">
     <h1 class="text-3xl font-bold text-slate-900">Login</h1>
     <p class="mt-2 text-slate-600">Please sign in to continue.</p>
 

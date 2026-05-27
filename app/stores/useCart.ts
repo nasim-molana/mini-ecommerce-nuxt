@@ -7,7 +7,7 @@ function safeParse(data: string | null): CartItem[] {
   } catch {
     return []
   }
-}
+} 
 
 export const useCart = defineStore('cart', () => {
   const items = ref<CartItem[]>([])
@@ -39,7 +39,7 @@ export const useCart = defineStore('cart', () => {
       items.value.push({ ...product, quantity: 1 })
     }
     saveToStorage()
-  }
+  } 
 
   const removeFromCart = (id: number) => {
     items.value = items.value.filter((item) => item.id !== id)

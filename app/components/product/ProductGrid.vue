@@ -15,4 +15,4 @@ defineProps<{
       :product="product"
     />
   </div>
-</template>
+</template> 

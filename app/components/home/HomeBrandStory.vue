@@ -3,7 +3,7 @@
     class="bg-[#FFF7ED] px-6 py-12 md:px-10 md:py-16"
     aria-labelledby="brand-story-heading"
   >
-    <div class="mx-auto w-full max-w-7xl space-y-10 text-[#111827]">
+    <div class="mx-auto w-full max-w-7xl space-y-10 text-[#111827] md:px-4">
       <div class="space-y-4">
         <h2
           id="brand-story-heading"

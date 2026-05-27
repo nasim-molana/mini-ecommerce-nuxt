@@ -48,8 +48,5 @@ export default defineEventHandler(async (event) => {
 
   const product = result.data
 
-  return {
-    ...mapDirectusProduct(product, apiBase, categoryMap),
-    description: String(product.description ?? '')
-  }
+  return mapDirectusProduct(product, apiBase, categoryMap)
 })

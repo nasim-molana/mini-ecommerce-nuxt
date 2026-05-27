@@ -1,205 +1,219 @@
-# 🛒 Mini E-Commerce (Nuxt 3)
+# Mini Commerce (Nuxt) — Molana Shop
 
-A **production-ready frontend e-commerce application** built with **Nuxt**, **Vue 3 (Composition API)**, and **TypeScript**, focusing on **scalable architecture**, **clean code**, and **real-world development practices**.
+A **portfolio-grade e-commerce frontend** built with **Nuxt 4**, **Vue 3 (Composition API)**, **TypeScript**, and **Tailwind CSS**, backed by **Directus** as a headless CMS. The focus is on scalable structure, reusable UI, and real-world patterns (API layer, Pinia, auth, routing).
 
 ---
 
-## Design Resources
+## Design
 
 ### Figma
 
-Homepage UI/UX Design:
-- Responsive Layout
-- UI Components
-- Product Card Design
-- Header & Footer Structure
+Homepage UI/UX (responsive layout, product cards, header & footer):
 
-Figma Link:
 [View Figma Design](https://www.figma.com/make/FSqLxFaAz6o3P7bNT8TQKl/Enhance-spacing-and-mobile-design?code-node-id=0-9&p=f&t=CDQxG8RMp7zO2eu6-0&fullscreen=1)
 
-
-### Homepage Preview
+### Homepage preview
 
 ![Homepage Preview](public/images/homepage-preview.png)
 
 ---
 
-## 🚀 Tech Stack
+## Tech stack
 
-* **Nuxt 3**
-* **Vue 3 (Composition API)**
-* **TypeScript**
-* **Tailwind CSS**
-* **Pinia (State Management)**
-* **REST API (Fake Store API or custom backend)**
-
----
-
-## 🎯 Project Purpose
-
-This project is designed as a **real-world portfolio application** to demonstrate:
-
-* Scalable frontend architecture
-* Component-driven development
-* Clean and maintainable code
-* State management with Pinia
-* API integration and data handling
-* Professional Git workflow
+| Layer | Technology |
+|--------|------------|
+| Framework | **Nuxt 4** |
+| UI | **Vue 3** (Composition API, `<script setup>`) |
+| Language | **TypeScript** |
+| Styling | **Tailwind CSS** |
+| Icons | **@nuxt/icon** |
+| State | **Pinia** (cart) |
+| Backend | **Directus** (REST via Nitro server routes + dev proxy) |
 
 ---
 
-## 🧩 Core Features
+## Features
 
-### 🛍 Product Flow
+### Homepage
 
-* Product listing (grid view)
-* Product detail page (dynamic routing)
-* Category-based filtering
-* Search functionality
+- **Hero** (`HomeHero`) — CTA to shop, brand imagery
+- **Popular products** (`HomePopularProducts`) — up to 4 items from `/api/products/featured` (`featured` field in Directus)
+- **Brand story** (`HomeBrandStory`)
 
-### 🛒 Shopping Cart
+### Catalog & search
 
-* Add / remove products
-* Update quantities
-* Total price calculation
-* Persistent cart state
+- **All products** — `/products` (`products/index.vue`)
+- **Search** — query `?q=` on `/products` (submit from header; debounce not used)
+- **Category pages** — `/category/[slug]` (e.g. beauty, fragrances, furniture)
+- **Product detail** — `/products/[id]` (dynamic route)
+- **Unified cards** — `ProductGrid` + `ProductCard` (rating, short description, add to cart, link to detail)
 
-### 🔐 Authentication (Mock)
+### Layout
 
-* Login / Logout (local storage based)
-* Sign-in UI has not been implemented yet (`/login`)
-* Route middleware file exists but is not ready (`app/middleware/auth.ts`)
+- **Header** — logo, category nav (“All” + Directus categories), search, cart badge, auth menu; fixed bar with dynamic `--app-header-offset`
+- **Footer** — quick links, categories, contact, social icons, overlapping logo strip
 
-### ⚙️ Data Handling
+### Shopping cart
 
-* Server API endpoints for product data:
+- Add / remove items, update quantity, totals
+- Persisted in `localStorage` via Pinia (`useCart`)
 
-  * `/api/products`
-  * `/api/products/[id]`
-* Composables for business logic and data fetching:
+### Authentication
 
-  * `useFetchProducts`
-  * `useProductById`
-  * `useCategories`
-  * `useSearch`
-* Loading, error, and empty states
+- **Login** — `/login` (Directus auth through `/directus` proxy)
+- **Session** — tokens in `localStorage`; `useAuth` + `auth.client` plugin
+- **Protected route** — `/checkout` uses `auth` middleware (redirect to login with `?redirect=`)
 
-### 🧠 Architecture
+### Checkout
 
-* Separation of concerns:
+- Order summary (cart totals, signed-in user)
+- Payment flow **not implemented** (placeholder copy)
 
-  * UI components
-  * Business logic (composables)
-  * Global state (Pinia)
-* Reusable UI components (design system approach)
+### Data & API (Nitro)
+
+Server routes call Directus and map responses for the app:
+
+| Endpoint | Purpose |
+|----------|---------|
+| `GET /api/products` | All products |
+| `GET /api/products/:id` | Single product + description |
+| `GET /api/products/featured` | Featured products (limit 4, fallback strategies) |
+| `GET /api/categories` | Navigation categories (`product_category`) |
+
+Shared server utils: `mapDirectusProduct`, `directusCategories`, `resolveProductCategory`, `isFeatured`.
+
+### UX states
+
+- Loading, error, and empty states on list, home sections, and detail page
 
 ---
 
-## 🏗 Project Structure
+## Routing note
 
+Product list lives at `pages/products/index.vue`, not `pages/products.vue`, so `/products/:id` correctly renders the detail page. See [docs/products-routing-conflict.md](docs/products-routing-conflict.md).
+
+Popular products architecture: [docs/popular-products-architecture.md](docs/popular-products-architecture.md).
+
+---
+
+## Project structure
+
+```
 app/
-components/
-layout/
-navigation/
-product/
-
-composables/
-useFetchProducts.ts
-useProductById.ts
-useCategories.ts
-useSearch.ts
-useProductState.ts
-
-stores/
-useCart.ts
-
-pages/
-index.vue
-category/[slug].vue
-products/[id].vue
-cart.vue
-login.vue
-
-types/
-product.ts
-cart.ts
-category.ts
-
-middleware/
-auth.ts
+├── app.vue                 # Root + cart hydration from localStorage
+├── assets/css/main.css
+├── components/
+│   ├── home/               # HomeHero, HomePopularProducts, HomeBrandStory
+│   ├── layout/             # AppHeader, AppFooter, Header*, FooterLogo
+│   └── product/            # ProductCard, ProductGrid
+├── composables/
+│   ├── useAddToCart.ts
+│   ├── useAuth.ts
+│   ├── useCategories.ts
+│   ├── useFeaturedProducts.ts
+│   ├── useFetchProducts.ts
+│   ├── useProductById.ts
+│   ├── useSearch.ts
+│   └── useProductState.ts  # (utility; optional / legacy)
+├── layouts/default.vue
+├── middleware/auth.ts
+├── pages/
+│   ├── index.vue
+│   ├── login.vue
+│   ├── cart.vue
+│   ├── checkout.vue
+│   ├── category/[slug].vue
+│   └── products/
+│       ├── index.vue       # /products
+│       └── [id].vue        # /products/:id
+├── plugins/auth.client.ts
+├── stores/useCart.ts
+└── types/                  # product, cart, category
 
 server/
-api/
-products.get.ts
-products/[id].get.ts
+├── api/
+│   ├── categories.get.ts
+│   ├── products.get.ts
+│   └── products/
+│       ├── [id].get.ts
+│       └── featured.get.ts
+└── utils/                  # Directus mapping & featured helpers
+
+docs/                       # Architecture notes (routing, popular products)
+public/                     # logo, images
+nuxt.config.ts              # Directus URL + /directus proxy
+```
 
 ---
 
-## 🧠 Key Concepts
+## Configuration
 
-* **Composable Architecture** → Encapsulating logic into reusable functions
-* **State Management with Pinia** → Centralized and predictable state
-* **Typed Data Models** → Strong TypeScript usage for reliability
-* **Clean Separation of Layers** → UI vs Logic vs State
-* **Reusable Components** → Scalable and maintainable UI
+`nuxt.config.ts` sets:
+
+- `runtimeConfig.directusUrl` — server-side Directus base URL
+- `runtimeConfig.public.apiBase` — `/directus` (browser + auth)
+- Nitro proxy: `/directus/**` → Directus instance
+
+For a different Directus host, change `directusUrl` in `nuxt.config.ts` (or override via env in your deployment setup).
 
 ---
 
-## 🔁 Development Workflow
+## Setup
 
-This project follows a **professional Git workflow**:
+```bash
+npm install
+```
 
-* Feature-based branches
-* Pull Requests for every change
-* Conventional commits
+## Development
+
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000).
+
+## Production
+
+```bash
+npm run build
+npm run preview
+```
+
+---
+
+## Development workflow
+
+- Feature branches (e.g. `feat/product-detail-page`, `refactor/product-card-ui`)
+- Pull requests per change
+- Conventional commits
 
 Example:
 
-feature/cart-system
-feat: implement cart state with Pinia
+```text
+feat: unify product cards and align cart/checkout layout
+fix(routing): move product list to products/index for detail routes
+```
 
 ---
 
-## ⚙️ Setup
+## Highlights
 
-npm install
-
----
-
-## 💻 Development
-
-npm run dev
-
-Open:
-http://localhost:3000
+- **Headless CMS** integration (Directus), not a mock JSON shop API
+- **Single product card** reused across shop, categories, and homepage featured section
+- **Composable + Pinia** separation: fetch/auth/search in composables, cart in store
+- **Server API layer** in Nuxt keeps tokens and mapping off the client where appropriate
+- Documented routing and homepage data decisions under `docs/`
 
 ---
 
-## 🏁 Production
+## Author
 
-npm run build
-npm run preview
-
----
-
-## 📌 Highlights
-
-* Designed with **real-world scalability in mind**
-* Focus on **maintainability and clean architecture**
-* Demonstrates **frontend engineering best practices**, not just UI
-
----
-
-## 👤 Author
-
-**Nasim Molana**
+**Nasim Molana**  
 Frontend Developer (Vue / Nuxt)
 
-GitHub: https://github.com/nasim-molana
-LinkedIn: (your link)
+- GitHub: [nasim-molana](https://github.com/nasim-molana)
+- LinkedIn: _(add your link)_
 
 ---
 
-## ⭐️
-
-If you find this project useful, feel free to star the repository.
+If this project is useful for your learning or portfolio, consider starring the repository.

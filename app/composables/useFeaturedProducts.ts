@@ -2,7 +2,7 @@ import type { Product } from '~/types/product'
 
 export const useFeaturedProducts = () => {
   const result = useAsyncData<Product[]>(
-    'featured-products-v2',
+    'featured-products',
     () => $fetch<Product[]>('/api/products/featured'),
     {
       server: true,

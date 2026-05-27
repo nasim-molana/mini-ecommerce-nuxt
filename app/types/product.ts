@@ -9,7 +9,3 @@ export type Product = {
   rating?: number
   featured?: boolean
 }
-
-export type ProductDetails = Product & {
-  description: string
-}

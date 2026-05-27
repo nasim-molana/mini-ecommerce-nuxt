@@ -7,10 +7,7 @@ import AppFooter from '~/components/layout/AppFooter.vue'
   <div class="flex min-h-screen flex-col">
     <AppHeader />
 
-    <main
-      class="flex-1 bg-[#FFF7ED]"
-      style="padding-top: var(--app-header-offset, 4rem)"
-    >
+    <main class="flex-1 bg-[#FFF7ED]">
       <slot />
     </main>
 

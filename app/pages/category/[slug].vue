@@ -19,7 +19,7 @@ const filteredProducts = computed(() => {
 <template>
   <div class="mx-auto max-w-7xl px-6 py-6 md:px-10">
     <h1 class="text-2xl font-bold mb-6">
-      Category: {{ slug }}
+      {{ slug }}
     </h1>
 
     <div v-if="pending">Loading...</div>

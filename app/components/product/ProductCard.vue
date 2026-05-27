@@ -20,10 +20,24 @@ const emptyStars = computed(() =>
   5 - fullStars.value - (hasHalfStar.value ? 1 : 0)
 )
 
+function plainTextFromHtml(html: string): string {
+  return html
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/&nbsp;/gi, ' ')
+    .replace(/&amp;/gi, '&')
+    .replace(/&lt;/gi, '<')
+    .replace(/&gt;/gi, '>')
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;/gi, "'")
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
 const shortDescription = computed(() => {
-  const text = props.product.description?.trim()
-  if (!text) return ''
-  return text.length > 72 ? `${text.slice(0, 72)}…` : text
+  const raw = props.product.description?.trim()
+  if (!raw) return ''
+ 
+  return plainTextFromHtml(raw)
 })
 
 const handleAddToCart = () => {
@@ -37,12 +51,12 @@ const handleAddToCart = () => {
   >
     <NuxtLink
       :to="`/products/${product.id}`"
-      class="block p-4"
+      class="flex h-48 shrink-0 items-center justify-center p-4"
     >
       <img
         :src="product.image"
         :alt="product.name"
-        class="mx-auto h-40 w-full object-contain"
+        class="max-h-full max-w-full object-contain"
       >
     </NuxtLink>
 
@@ -76,14 +90,14 @@ const handleAddToCart = () => {
 
       <NuxtLink
         :to="`/products/${product.id}`"
-        class="text-base font-bold text-[#111827] hover:text-[#F97316]"
+        class="line-clamp-1 text-base font-bold text-[#111827] hover:text-[#F97316]"
       >
         {{ product.name }}
       </NuxtLink>
 
       <p
         v-if="shortDescription"
-        class="mt-2 line-clamp-2 text-sm leading-relaxed text-[#6B7280]"
+        class="mt-2 line-clamp-2 max-h-10 overflow-hidden text-sm leading-snug text-[#6B7280]"
       >
         {{ shortDescription }}
       </p>

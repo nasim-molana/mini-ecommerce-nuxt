@@ -3,6 +3,9 @@
 A **portfolio-grade e-commerce frontend** built with **Nuxt 4**, **Vue 3 (Composition API)**, **TypeScript**, and **Tailwind CSS**, backed by **Directus** as a headless CMS. The focus is on scalable structure, reusable UI, and real-world patterns (API layer, Pinia, auth, routing).
 
 ---
+## Live Demo
+
+Explore the deployed version here: [Mini Commerce — Molana Shop](https://mini-ecommerce-nuxt.vercel.app/)
 
 ## Design
 
@@ -67,7 +70,7 @@ Homepage UI/UX (responsive layout, product cards, header & footer):
 ### Checkout
 
 - Order summary (cart totals, signed-in user)
-- Payment flow **not implemented** (placeholder copy)
+- Checkout currently includes order summary only.
 
 ### Data & API (Nitro)
 
@@ -114,7 +117,7 @@ app/
 │   ├── useFetchProducts.ts
 │   ├── useProductById.ts
 │   ├── useSearch.ts
-│   └── useProductState.ts  # (utility; optional / legacy)
+│   └── useProductState.ts  # (utility; optional)
 ├── layouts/default.vue
 ├── middleware/auth.ts
 ├── pages/
@@ -212,8 +215,5 @@ fix(routing): move product list to products/index for detail routes
 Frontend Developer (Vue / Nuxt)
 
 - GitHub: [nasim-molana](https://github.com/nasim-molana)
-- LinkedIn: _(add your link)_
+- LinkedIn: [nasim-molana] (https://www.linkedin.com/in/nasim-molana/)
 
----
-
-If this project is useful for your learning or portfolio, consider starring the repository.

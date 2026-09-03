@@ -212,7 +212,7 @@ fix(routing): move product list to products/index for detail routes
 ## Author
 
 **Nasim Molana**  
-Frontend Developer (Vue / Nuxt)
+Software Engineer | Frontend Background | Transitioning into IT Project Coordination
 
 - GitHub: [nasim-molana](https://github.com/nasim-molana)
 - LinkedIn: [nasim-molana] (https://www.linkedin.com/in/nasim-molana/)
